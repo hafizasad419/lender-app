@@ -1,23 +1,22 @@
-﻿import {
+import {
     generateAccessToken,
     signupAdminService,
     loginAdminService
-} from "../services/auth.service.ts";
-import { Admin } from "../models/admin.model.ts";
-import { COOKIE_OPTIONS, ROLES } from "../constants.ts";
-import { AppError, handleError } from "../utils/index.ts";
-import { SECRET_KEY } from "../config/index.ts";
-import type { Request, Response } from "express";
-import { loginLenderService, signupLenderService } from "../services/lender.service.ts";
-import { Lender } from "../models/lender.model.ts";
-import { loginCollectorService, signupCollectorService } from "../services/collector.service.ts";
-import { Collector } from "../models/collector.model.ts";
+} from "../services/auth.service.js";
+import { Admin } from "../models/admin.model.js";
+import { COOKIE_OPTIONS, ROLES } from "../constants.js";
+import { AppError, handleError } from "../utils/index.js";
+import { SECRET_KEY } from "../config/index.js";
+import { loginLenderService, signupLenderService } from "../services/lender.service.js";
+import { Lender } from "../models/lender.model.js";
+import { loginCollectorService, signupCollectorService } from "../services/collector.service.js";
+import { Collector } from "../models/collector.model.js";
 
 
 
 
 // Signup Lender
-export const signupLender = async (req: Request, res: Response): Promise<void> => {
+export const signupLender = async (req, res) => {
     try {
         const { name, email, password, role, organization } = req.body;
         // console.log(name, email, password, role, organization);
@@ -36,7 +35,7 @@ export const signupLender = async (req: Request, res: Response): Promise<void> =
             id: lender._id.toString()
         });
 
-    } catch (error: any) {
+    } catch (error) {
         if (error instanceof AppError) {
             handleError(res, error, error.statusCode, error.message);
         } else {
@@ -47,7 +46,7 @@ export const signupLender = async (req: Request, res: Response): Promise<void> =
 
 
 // Login Lender
-export const loginLender = async (req: Request, res: Response): Promise<void> => {
+export const loginLender = async (req, res)=> {
     try {
         const { email, password } = req.body;
 
@@ -73,14 +72,14 @@ export const loginLender = async (req: Request, res: Response): Promise<void> =>
                 accessToken
             });
     }
-    catch (error: any) {
+    catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 401, "Invalid Email or Password");
     }
 };
 
 
 // Signup Collector
-export const signupCollector = async (req: Request, res: Response): Promise<void> => {
+export const signupCollector = async (req, res)=> {
     try {
         const { name, email, password, role, organization } = req.body;
 
@@ -99,7 +98,7 @@ export const signupCollector = async (req: Request, res: Response): Promise<void
             id: collector._id.toString()
         });
 
-    } catch (error: any) {
+    } catch (error) {
         if (error instanceof AppError) {
             handleError(res, error, error.statusCode, error.message);
         } else {
@@ -111,7 +110,7 @@ export const signupCollector = async (req: Request, res: Response): Promise<void
 
 
 // Login Collector
-export const loginCollector = async (req: Request, res: Response): Promise<void> => {
+export const loginCollector = async (req, res)=> {
     try {
         const { email, password } = req.body;
 
@@ -136,14 +135,14 @@ export const loginCollector = async (req: Request, res: Response): Promise<void>
                 accessToken
             });
     }
-    catch (error: any) {
+    catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 401, "Invalid Email or Password");
     }
 };
 
 
 // Signup Admin
-export const signupAdmin = async (req: Request, res: Response) => {
+export const signupAdmin = async (req, res) => {
     try {
         const { name, email, password, secretKey } = req.body;
 
@@ -175,7 +174,7 @@ export const signupAdmin = async (req: Request, res: Response) => {
 
 
 // Login Controller
-export const loginAdmin = async (req: Request, res: Response) => {
+export const loginAdmin = async (req, res) => {
     try {
         const { email, password, secretKey } = req.body;
 
@@ -210,7 +209,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
 
 
 // single function to handle login by invoking current controllers as functions
-export const login = async (req: Request, res: Response) => {
+export const login = async (req, res) => {
     try {
         const { role } = req.body;
 
@@ -232,7 +231,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (req, res) => {
     try {
         const { role } = req.body;
 
@@ -255,7 +254,7 @@ export const signup = async (req: Request, res: Response) => {
 
 
 // Logout Admin
-export const logoutAdmin = async (req: Request, res: Response) => {
+export const logoutAdmin = async (req, res) => {
     try {
         res.clearCookie("accessToken", COOKIE_OPTIONS);
         res.status(200).json({ message: "Admin Logout Successful" });
@@ -265,7 +264,7 @@ export const logoutAdmin = async (req: Request, res: Response) => {
 };
 
 // Logout Collector
-export const logoutCollector = async (req: Request, res: Response) => {
+export const logoutCollector = async (req, res) => {
     try {
         res.clearCookie("accessToken", COOKIE_OPTIONS);
         res.status(200).json({ message: "Collector Logout Successful" });
@@ -275,7 +274,7 @@ export const logoutCollector = async (req: Request, res: Response) => {
 };
 
 // Logout Lender
-export const logoutLender = async (req: Request, res: Response) => {
+export const logoutLender = async (req, res) => {
     try {
         res.clearCookie("accessToken", COOKIE_OPTIONS);
         res.status(200).json({ message: "Lender Logout Successful" });
@@ -285,7 +284,7 @@ export const logoutLender = async (req: Request, res: Response) => {
 };
 
 // Single Logout Handler
-export const logout = async (req: Request, res: Response) => {
+export const logout = async (req, res) => {
     try {
         const { role } = req.body;
 

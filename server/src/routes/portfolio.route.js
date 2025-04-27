@@ -7,7 +7,7 @@ import {
     submitPortfolioBid,
     getAllBidsOnPortfolio,
     getPortfolioListings
-} from "../controllers/portfolio.controller.ts";
+} from "../controllers/portfolio.controller.js";
 
 const portfolioRouter = Router();
 

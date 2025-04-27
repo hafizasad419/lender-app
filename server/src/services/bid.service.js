@@ -1,7 +1,7 @@
-import { Bid } from "../models/bid.model.ts";
-import { AppError } from "../utils/index.ts";
+import { Bid } from "../models/bid.model.js";
+import { AppError } from "../utils/index.js";
 
-export const fetchBidsByCollectorIdService = async (collectorId: string) => {
+export const fetchBidsByCollectorIdService = async (collectorId) => {
     try {
         const bids = await Bid.find({ collectorId })
             .populate({
@@ -12,7 +12,7 @@ export const fetchBidsByCollectorIdService = async (collectorId: string) => {
             .sort({ createdAt: -1 });
 
         return bids;
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error.message || "Failed to fetch bids for collector.");
     }
 };

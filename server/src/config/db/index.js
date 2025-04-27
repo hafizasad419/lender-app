@@ -1,5 +1,5 @@
-﻿import mongoose from "mongoose";
-import { MONGO_DB_URI } from "../index.ts";
+import mongoose from "mongoose";
+import { MONGO_DB_URI } from "../index.js";
 
 export const connectToMongoDB = async () => {
     try {
@@ -11,4 +11,3 @@ export const connectToMongoDB = async () => {
         process.exit(1)
     }
 }
-

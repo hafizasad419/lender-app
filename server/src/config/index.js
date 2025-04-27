@@ -17,7 +17,7 @@ export const EMAIL_USERNAME =
 export const EMAIL_PASSWORD =
     process.env.EMAIL_PASSWORD;
 
-export const ACCESS_TOKEN_SECRET: string | undefined =
+export const ACCESS_TOKEN_SECRET =
     process.env.ACCESS_TOKEN_SECRET;
 
 

@@ -1,8 +1,7 @@
-import type { Request, Response } from "express";
-import { fetchBidsByCollectorIdService } from "../services/bid.service.ts";
-import { AppError, handleError } from "../utils/index.ts";
+import { fetchBidsByCollectorIdService } from "../services/bid.service.js";
+import { AppError, handleError } from "../utils/index.js";
 
-export const fetchBidsByCollectorId = async (req: Request, res: Response) => {
+export const fetchBidsByCollectorId = async (req, res) => {
     try {
         const { collectorId } = req.params;
 
@@ -17,7 +16,7 @@ export const fetchBidsByCollectorId = async (req: Request, res: Response) => {
             message: "Bids fetched successfully.",
             bids,
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to fetch bids");
     }
 };

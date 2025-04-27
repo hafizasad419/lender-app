@@ -1,10 +1,9 @@
-import type { Request, Response } from "express";
-import { getLenderProfileService } from "../services/lender.service.ts";
-import { handleError } from "../utils/index.ts";
+import { getLenderProfileService } from "../services/lender.service.js";
+import { handleError } from "../utils/index.js";
 
 
 
-export const getLenderProfile = async (req: Request, res: Response): Promise<void> => {
+export const getLenderProfile = async (req, res) => {
     try {
         const { lenderId } = req.params;
 
@@ -16,20 +15,7 @@ export const getLenderProfile = async (req: Request, res: Response): Promise<voi
             lender,
         });
 
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error.statusCode || 500, error.message);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-

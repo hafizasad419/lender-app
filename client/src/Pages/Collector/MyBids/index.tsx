@@ -16,7 +16,7 @@ function MyBids() {
                 setBids(data.bids);
                 console.log(data);
                 SuccessNotification(data.message)
-            } catch (error: any) {
+            } catch (error) {
                 const message = error.response?.data?.error || error?.message || 'Failed to fetch collector profile.';
                 ErrorNotification(message);
             }

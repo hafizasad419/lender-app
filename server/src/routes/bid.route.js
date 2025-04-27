@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { fetchBidsByCollectorId } from "../controllers/bid.controller.ts";
+import { fetchBidsByCollectorId } from "../controllers/bid.controller.js";
 
 const bidRouter = Router();
 

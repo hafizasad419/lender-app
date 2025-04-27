@@ -1,41 +1,15 @@
-import { DebtEntry } from "../models/debtEntry.model.ts";
-import { Lender } from "../models/lender.model.ts";
-import { Collector } from "../models/collector.model.ts";
-import { DebtPortfolio } from "../models/debtPortfolio.model.ts";
-import { AppError } from "../utils/index.ts";
-import { Bid } from "../models/bid.model.ts";
+import { DebtEntry } from "../models/debtEntry.model.js";
+import { Lender } from "../models/lender.model.js";
+import { Collector } from "../models/collector.model.js";
+import { DebtPortfolio } from "../models/debtPortfolio.model.js";
+import { AppError } from "../utils/index.js";
+import { Bid } from "../models/bid.model.js";
 
 
 
-
-interface PortfolioQueryParams {
-    page?: number;
-    limit?: number;
-    sortBy?: "createdAt" | "postedDaysAgo"; // Can expand later
-    sortOrder?: "asc" | "desc";
-}
-
-
-interface DebtEntryPayload {
-    debtorName: string;
-    demographics: {
-        age: number;
-        gender: string;
-        location: string;
-    };
-    principalAmount: number;
-    interest: number;
-    debtAgeInMonths: number;
-    lastPaymentDate: Date;
-}
-
-interface UploadDebtPayload {
-    lenderId: string;
-    debts: DebtEntryPayload[];
-    portfolioName: string
-}
-
-export const uploadDebtService = async ({ lenderId, debts, portfolioName }: UploadDebtPayload) => {
+export const uploadDebtService = async (
+    { lenderId, debts, portfolioName }
+) => {
     try {
         if (!lenderId || !debts?.length) {
             throw new AppError(400, "Lender ID and debts are required.");
@@ -79,24 +53,24 @@ export const uploadDebtService = async ({ lenderId, debts, portfolioName }: Uplo
             message: "Portfolio and debts uploaded successfully.",
             portfolioId: portfolio._id
         };
-    } catch (error: any) {
+    } catch (error) {
         console.error("uploadDebtService error:", error);
         throw new AppError(500, error.message || "Failed to upload debt portfolio.");
     }
 };
 
 
-export const getLenderPortfoliosService = async (lenderId: string) => {
+export const getLenderPortfoliosService = async (lenderId) => {
     try {
         const portfolios = await DebtPortfolio.find({ lenderId }).sort({ createdAt: -1 });
         return portfolios;
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to get lender portfolios.");
     }
 };
 
 
-export const getPortfolioDetailsService = async (portfolioId: string) => {
+export const getPortfolioDetailsService = async (portfolioId) => {
     if (!portfolioId) {
         throw new AppError(400, "Portfolio ID is required.");
     }
@@ -131,7 +105,7 @@ export const getPortfolioDetailsService = async (portfolioId: string) => {
 
 
 
-export const deletePortfolioService = async (portfolioId: string) => {
+export const deletePortfolioService = async (portfolioId) => {
     try {
         if (!portfolioId) {
             throw new AppError(400, "Portfolio ID is required.");
@@ -154,37 +128,37 @@ export const deletePortfolioService = async (portfolioId: string) => {
         await DebtPortfolio.findByIdAndDelete(portfolioId);
 
         return { message: "Portfolio and associated debt entries deleted successfully." };
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to delete portfolio.");
     }
 };
 
 
-export const getCollectorBids = async (collectorId: string) => {
+export const getCollectorBids = async (collectorId) => {
     try {
         const collector = await Collector
             .findById(collectorId)
             .populate('bids');
         return collector?.bids || [];
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to get collector bids.");
     }
 };
 
-export const getLenderDebtEntries = async (lenderId: string) => {
+export const getLenderDebtEntries = async (lenderId) => {
     try {
         const debtEntries = await DebtEntry.find({ lenderId })
             .populate('portfolioId')  // Populate portfolio data to get portfolio details
             .populate('portfolioId.lenderId');  // Optionally populate lender info in the portfolio
 
         return debtEntries;
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to get debt entries.");
     }
 };
 
 
-export const getPortfolioListingsService = async (params: PortfolioQueryParams = {}) => {
+export const getPortfolioListingsService = async (params = {}) => {
     const page = Number(params.page) > 0 ? Number(params.page) : 1;
     const limit = Number(params.limit) > 0 ? Number(params.limit) : 6;
     const skip = (page - 1) * limit;
@@ -279,10 +253,10 @@ export const getPortfolioListingsService = async (params: PortfolioQueryParams =
 
 
 export const submitPortfolioBidService = async (
-    portfolioId: string,
-    collectorId: string,
-    bidType: "fullBid" | "percentage",
-    bidAmount: number
+    portfolioId,
+    collectorId,
+    bidType,
+    bidAmount
 ) => {
     try {
         const portfolio = await DebtPortfolio.findById(portfolioId);
@@ -305,7 +279,7 @@ export const submitPortfolioBidService = async (
             // Update existing bid
             existingBid.type = bidType;
             existingBid.amount = bidAmount;
-            existingBid.updatedAt = new Date(); 
+            existingBid.updatedAt = new Date();
             await existingBid.save();
             return existingBid;
         }
@@ -321,7 +295,7 @@ export const submitPortfolioBidService = async (
         await bid.save();
         return bid;
 
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to submit bid.");
     }
 };
@@ -329,7 +303,7 @@ export const submitPortfolioBidService = async (
 
 
 
-export const getAllBidsOnPortfolioService = async (portfolioId: string) => {
+export const getAllBidsOnPortfolioService = async (portfolioId) => {
     try {
         const portfolio = await DebtPortfolio.findById(portfolioId);
         if (!portfolio) {
@@ -340,7 +314,7 @@ export const getAllBidsOnPortfolioService = async (portfolioId: string) => {
             .populate("collectorId", "name email organization");
 
         return bids;
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error?.message || "Failed to fetch bids.");
     }
 };

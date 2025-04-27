@@ -48,7 +48,7 @@ const Marketplace = () => {
         listings: data.listings.data,
         pagination: data.listings.pagination,
       }));
-    } catch (error: any) {
+    } catch (error) {
       if (error.response?.data?.error) {
         ErrorNotification(error.response.data.error);
       } else {

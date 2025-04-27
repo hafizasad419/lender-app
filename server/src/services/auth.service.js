@@ -1,13 +1,12 @@
-﻿import { Admin } from "../models/admin.model.ts";
+import { Admin } from "../models/admin.model.js";
 import { hash } from "bcryptjs";
-import { AppError } from "../utils/index.ts";
-import type { Model, Types } from "mongoose";
+import { AppError } from "../utils/index.js";
 
 
 export const generateAccessToken = async (
-  userId: string | Types.ObjectId,
-  model: Model<any>,
-  userType: string
+  userId,
+  model ,
+  userType
 ) => {
   try {
     const user = await model.findById(userId);
@@ -20,7 +19,7 @@ export const generateAccessToken = async (
     await user.save({ validateBeforeSave: false });
 
     return { accessToken };
-  } catch (error: any) {
+  } catch (error) {
     if (error instanceof AppError) throw error;
 
     throw new AppError(
@@ -34,7 +33,7 @@ export const generateAccessToken = async (
 
 // Sign up a new Admin
 export const signupAdminService =
-    async (name: string, email: string, password: string) => {
+    async (name, email, password) => {
         try {
             const existingAdmin = await Admin.findOne({ email });
             if (existingAdmin) {
@@ -50,7 +49,7 @@ export const signupAdminService =
             });
 
             return await admin.save();
-        } catch (error: any) {
+        } catch (error) {
             throw new AppError(500, error?.message || "Failed to create admin.");
         }
     };
@@ -67,7 +66,7 @@ export const signupAdminService =
 5. Send cookies
 
 */
-export const loginAdminService = async (email: string, password: string) => {
+export const loginAdminService = async (email, password) => {
 
     const admin = await Admin.findOne({ email });
 
@@ -84,6 +83,3 @@ export const loginAdminService = async (email: string, password: string) => {
 
     return admin;
 };
-
-
-

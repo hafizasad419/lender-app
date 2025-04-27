@@ -1,22 +1,7 @@
 import bcrypt, { compare } from "bcryptjs";
 import mongoose, { Document } from "mongoose"
 import jwt from "jsonwebtoken";
-import type { Secret, SignOptions } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../config/index.ts";
-
-interface ILender extends Document {
-    _id: string;
-    name: string;
-    email: string;
-    password: string;
-    accessToken: string;
-    // isVerified: boolean;
-    // verificationToken: string | undefined;
-    role:string;
-    portfolios: mongoose.Types.ObjectId[];
-    generateAccessToken: () => string;
-    comparePassword: (candidatePassword: string) => Promise<boolean>;
-}
+import { ACCESS_TOKEN_SECRET } from "../config/index.js";
 
 const lenderSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -36,24 +21,24 @@ lenderSchema.pre("save", async function (next) {
 });
 
 
-lenderSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-    const lender = this as ILender; // Explicitly cast `this`
+lenderSchema.methods.comparePassword = async function (candidatePassword) {
+    const lender = this; 
     return await compare(candidatePassword, lender.password);
 };
 
 lenderSchema.methods.generateAccessToken = function () {
 
-    const signOptions: SignOptions = {
+    const signOptions = {
         // expiresIn: ACCESS_TOKEN_EXPIRY as string
         expiresIn: "7d"
     };
 
     return jwt.sign(
         { _id: this._id, email: this.email },
-        ACCESS_TOKEN_SECRET as Secret,
+        ACCESS_TOKEN_SECRET,
         signOptions
     );
 };
 
 
-export const Lender = mongoose.model<ILender>("Lender", lenderSchema);
+export const Lender = mongoose.model("Lender", lenderSchema);

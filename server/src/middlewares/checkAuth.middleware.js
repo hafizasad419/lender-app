@@ -1,10 +1,8 @@
-import type { Request, Response, NextFunction } from "express";
-import { AppError } from "../utils/index.ts";
+import { AppError } from "../utils/index";
 
-export type Role = "admin" | "lender" | "collector";
 
-export const checkAuth = (role: Role) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const checkAuth = (role) => {
+  return (req, res, next) => {
     try {
       const token = req.cookies?.accessToken;
 

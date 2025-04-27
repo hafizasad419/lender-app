@@ -26,7 +26,7 @@ const PortfolioDetails = () => {
         const response = await Axios.get(`/portfolio/listings/${portfolioId}`);
         setPortfolioData(response.data?.data);
         console.log("Fetched:", response.data?.data);
-      } catch (error: any) {
+      } catch (error) {
         ErrorNotification(error?.response?.data?.error || "Failed to fetch portfolio.");
       } finally {
         setLoading(false);

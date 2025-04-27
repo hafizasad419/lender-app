@@ -35,7 +35,7 @@ export const lenderSignup = async (
             SuccessNotification('Account created successfully!');
             return response.data;
         }
-    } catch (error: any) {
+    } catch (error) {
         ErrorNotification(error?.response?.data?.error || 'Failed to create account.');
         throw error.response ? error : new Error("Something went wrong");
 

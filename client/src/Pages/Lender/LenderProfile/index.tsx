@@ -24,7 +24,7 @@ const LenderProfile: React.FC = () => {
                 // const res = await Axios.get(`/lender/profile/${lenderFromState._id}`);
                 // setLender(res?.data?.lender);
                 setLender(lenderFromState);
-            } catch (error: any) {
+            } catch (error) {
                 const message = error.response?.data?.error || error?.message || 'Failed to fetch lender profile.';
                 ErrorNotification(message);
             } finally {

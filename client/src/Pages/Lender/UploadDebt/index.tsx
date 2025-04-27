@@ -98,7 +98,7 @@ const UploadDebt = () => {
       }
 
       navigate("/portfolio");
-    } catch (error: any) {
+    } catch (error) {
       ErrorNotification(error?.response?.data?.error + " Please Refresh and Try Again." || "Failed to upload debt portfolio. Please Refresh and Try Again.");
       console.error("Debt upload error:", error);
       hasUploadedRef.current = false;

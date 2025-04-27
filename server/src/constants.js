@@ -12,5 +12,5 @@ export const ROLES = {
     ADMIN: "admin",
     LENDER: "lender",
     COLLECTOR: "collector"
-  } as const;
+  } 
   

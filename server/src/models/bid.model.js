@@ -10,7 +10,3 @@ const bidSchema = new mongoose.Schema({
 bidSchema.index({ collectorId: 1, debtPortfolioId: 1 }, { unique: true }); // Index for quick access to bids by collector and portfolio
 
 export const Bid = mongoose.model('Bid', bidSchema);
-
-
-
-

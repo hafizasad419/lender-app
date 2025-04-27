@@ -1,5 +1,5 @@
-import { Lender } from "../models/lender.model.ts";
-import { AppError } from "../utils/index.ts";
+import { Lender } from "../models/lender.model.js";
+import { AppError } from "../utils/index.js";
 
 
 
@@ -10,7 +10,7 @@ export const getAllLendersService = async () => {
 };
 
 // Sign up a new lender
-export const signupLenderService = async (name: string, email: string, password: string, role: string, organization: string) => {
+export const signupLenderService = async (name, email, password, role, organization) => {
     try {
         const existingLender = await Lender.findOne({ email });
         if (existingLender) {
@@ -27,7 +27,7 @@ export const signupLenderService = async (name: string, email: string, password:
 
         return await lender.save();
         
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error.message || "Failed to create lender.");
     }
 };
@@ -44,7 +44,7 @@ export const signupLenderService = async (name: string, email: string, password:
 5. Send cookies
 
 */
-export const loginLenderService = async (email: string, password: string) => {
+export const loginLenderService = async (email, password) => {
     const lender = await Lender.findOne({ email });
 
     if (!lender) {
@@ -62,7 +62,7 @@ export const loginLenderService = async (email: string, password: string) => {
 };
 
 
-export const getLenderProfileService = async (lenderId: string) => {
+export const getLenderProfileService = async (lenderId) => {
     try {
         const lender = await Lender.findById(lenderId)
             .select("name email organization")
@@ -72,13 +72,7 @@ export const getLenderProfileService = async (lenderId: string) => {
         }
 
         return lender;
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error.message || "Failed to fetch lender profile.");
     }
 };
-
-
-
-
-
-

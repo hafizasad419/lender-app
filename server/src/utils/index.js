@@ -1,10 +1,10 @@
-﻿import express from "express";
-import { IS_PRODUCTION } from "../constants.ts";
+import express from "express";
+import { IS_PRODUCTION } from "../constants.js";
 
 export const handleError = (
-    res: express.Response,
-    error: any,
-    defaultStatusCode: number,
+    res,
+    error,
+    defaultStatusCode,
     defaultMessage = "Sorry, Something Went Wrong.") => {
     console.error("Error:", error?.message || error);
 
@@ -22,7 +22,7 @@ export const handleError = (
 
 export class AppError extends Error {
     statusCode;
-    constructor(statusCode: number, message: string) {
+    constructor(statusCode, message) {
         super(message);
         this.statusCode = statusCode;
     }

@@ -24,7 +24,7 @@ const CollectorProfile: React.FC = () => {
                 // const res = await Axios.get(`/collector/profile/${collectorFromState._id}`);
                 // setCollector(res?.data?.collector);
                 setCollector(collectorFromState);
-            } catch (error: any) {
+            } catch (error) {
                 const message = error.response?.data?.error || error?.message || 'Failed to fetch collector profile.';
                 ErrorNotification(message);
             } finally {

@@ -1,13 +1,12 @@
-import type { Request, Response } from "express";
-import { AppError, handleError } from "../utils/index.ts";
+import { AppError, handleError } from "../utils/index.js";
 import {
     getLenderPortfoliosService,
     getLenderDebtEntries,
     deletePortfolioService, getPortfolioListingsService, uploadDebtService, submitPortfolioBidService, getAllBidsOnPortfolioService, getPortfolioDetailsService
-} from "../services/portfolio.service.ts";
+} from "../services/portfolio.service.js";
 
 
-export const uploadDebtController = async (req: Request, res: Response) => {
+export const uploadDebtController = async (req, res) => {
     try {
         const { lenderId, debts, portfolioName } = req.body;
 
@@ -22,13 +21,13 @@ export const uploadDebtController = async (req: Request, res: Response) => {
             message: result.message,
             portfolioId: result.portfolioId
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 401, "Invalid Email or Password");
     }
 };
 
 
-export const getLenderPortfoliosController = async (req: Request, res: Response) => {
+export const getLenderPortfoliosController = async (req, res) => {
     try {
         const { lenderId } = req.params;
 
@@ -43,14 +42,14 @@ export const getLenderPortfoliosController = async (req: Request, res: Response)
             message: "Lender portfolios fetched successfully.",
             portfolios,
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to get lender portfolios");
     }
 };
 
 
 
-export const deletePortfolioController = async (req: Request, res: Response) => {
+export const deletePortfolioController = async (req, res) => {
     try {
         const { portfolioId } = req.params;
 
@@ -64,14 +63,14 @@ export const deletePortfolioController = async (req: Request, res: Response) => 
             success: true,
             message: result.message,
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to delete portfolio");
     }
 };
 
 
 
-export const getPortfolioDetailsController = async (req: Request, res: Response) => {
+export const getPortfolioDetailsController = async (req, res) => {
     try {
         const { portfolioId } = req.params;
 
@@ -87,14 +86,14 @@ export const getPortfolioDetailsController = async (req: Request, res: Response)
             data: portfolioDetails
         });
 
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to fetch portfolio details");
     }
 };
 
 
 
-export const getLenderDebtEntriesController = async (req: Request, res: Response) => {
+export const getLenderDebtEntriesController = async (req, res) => {
     try {
         const { lenderId } = req.params;
 
@@ -109,13 +108,13 @@ export const getLenderDebtEntriesController = async (req: Request, res: Response
             message: "Debt entries fetched successfully.",
             debtEntries
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to fetch debt entries");
     }
 };
 
 
-export const getPortfolioListings = async (req: Request, res: Response): Promise<void> => {
+export const getPortfolioListings = async (req, res) => {
     try {
         const listings = await getPortfolioListingsService(req.query);
         res.status(200).json({ listings });
@@ -126,7 +125,7 @@ export const getPortfolioListings = async (req: Request, res: Response): Promise
 
 
 
-export const submitPortfolioBid = async (req: Request, res: Response) => {
+export const submitPortfolioBid = async (req, res) => {
 
     const { portfolioId, collectorId, bidType, bidAmount } = req.body
     try {
@@ -142,7 +141,7 @@ export const submitPortfolioBid = async (req: Request, res: Response) => {
             message: "Bid submitted successfully."
         });
 
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, 500, "Failed to submit bid.");
     }
 
@@ -150,7 +149,7 @@ export const submitPortfolioBid = async (req: Request, res: Response) => {
 }
 
 
-export const getAllBidsOnPortfolio = async (req: Request, res: Response) => {
+export const getAllBidsOnPortfolio = async (req, res) => {
     try {
         const { portfolioId } = req.params;
 
@@ -165,7 +164,7 @@ export const getAllBidsOnPortfolio = async (req: Request, res: Response) => {
             message: "Bids fetched successfully.",
             bids,
         });
-    } catch (error: any) {
+    } catch (error) {
         handleError(res, error, error instanceof AppError ? error.statusCode : 500, "Failed to fetch bids");
     }
 };

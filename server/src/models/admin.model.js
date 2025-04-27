@@ -1,20 +1,11 @@
-﻿import bcrypt from "bcryptjs";
-import mongoose, { Document } from "mongoose";
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../config/index.ts";
+import { ACCESS_TOKEN_SECRET } from "../config/index.js";
 
-interface IAdmin extends Document {
-    _id: string;
-    name: string;
-    email: string;
-    password: string;
-    role: string;
-    comparePassword: (candidatePassword: string) => Promise<boolean>;
-    generateAccessToken: () => string;
-}
 
 // Define the schema for the Admin model
-const adminSchema = new mongoose.Schema<IAdmin>(
+const adminSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -54,26 +45,25 @@ adminSchema.pre("save", async function (next) {
 
 
 
-adminSchema.methods.comparePassword = async function (
-    candidatePassword: string
-): Promise<boolean> {
+adminSchema.methods.comparePassword = async function
+    (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };
 
-adminSchema.methods.generateAccessToken = function (): string {
+adminSchema.methods.generateAccessToken = function () {
 
-    const signOptions: jwt.SignOptions = {
+    const signOptions = {
         // expiresIn: ACCESS_TOKEN_EXPIRY as string
         expiresIn: "7d"
     };
 
     return jwt.sign(
         { _id: this._id, email: this.email },
-        ACCESS_TOKEN_SECRET as jwt.Secret,
+        ACCESS_TOKEN_SECRET,
         // ACCESS_TOKEN_SECRET as Secret,
         signOptions
     );
 };
 
 // Export the Admin model
-export const Admin = mongoose.model<IAdmin>("Admin", adminSchema);
+export const Admin = mongoose.model("Admin", adminSchema);

@@ -1,5 +1,5 @@
-import { Collector } from "../models/collector.model.ts";
-import { AppError } from "../utils/index.ts";
+import { Collector } from "../models/collector.model.js";
+import { AppError } from "../utils/index.js";
 
 
 
@@ -10,7 +10,7 @@ export const getAllCollectorsService = async () => {
 };
 
 // Sign up a new collector
-export const signupCollectorService = async (name: string, email: string, password: string, role: string, organization: string) => {
+export const signupCollectorService = async (name, email, password, role, organization) => {
     try {
         const existingCollector = await Collector.findOne({ email });
         if (existingCollector) {
@@ -27,7 +27,7 @@ export const signupCollectorService = async (name: string, email: string, passwo
 
         return await collector.save();
 
-    } catch (error: any) {
+    } catch (error) {
         throw new AppError(500, error.message || "Failed to create collector.");
     }
 };
@@ -44,7 +44,7 @@ export const signupCollectorService = async (name: string, email: string, passwo
 5. Send cookies
 
 */
-export const loginCollectorService = async (email: string, password: string) => {
+export const loginCollectorService = async (email, password) => {
     const collector = await Collector.findOne({ email });
 
     if (!collector) {
@@ -60,11 +60,3 @@ export const loginCollectorService = async (email: string, password: string) => 
 
     return collector;
 };
-
-
-
-
-
-
-
-

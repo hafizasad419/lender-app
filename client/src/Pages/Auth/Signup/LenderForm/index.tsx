@@ -48,7 +48,7 @@ const LenderForm = ({ setUserDetails }: any) => {
             await lenderSignup(payload);
             navigate('/login')
             setUserDetails(payload);
-        } catch (error: any) {
+        } catch (error) {
             // const msg = err?.response?.data?.message || 'Network error';
             console.log("error on signup: ", error?.message)
         } finally {

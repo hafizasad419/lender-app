@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getLenderProfile } from "../controllers/lender.controller.ts";
+import { getLenderProfile } from "../controllers/lender.controller.js";
 
 const lenderRouter = Router();
 
