@@ -27,11 +27,12 @@ export const lenderLogin = async (
             SuccessNotification('Logged in successfully!');
             return response.data;
         }
-    } catch (error) {
+    } catch (error:any) {
         throw error.response ? error : new Error("Something went wrong, PLease Try again after some time.");
 
     }
 
 
 };
+
 

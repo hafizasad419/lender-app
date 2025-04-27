@@ -27,7 +27,7 @@ const Portfolio = () => {
       try {
         const response = await Axios.get(`/portfolio/lender/${lender._id}`);
         setPortfolios(response.data?.portfolios || []);
-      } catch (error) {
+      } catch (error:any) {
         ErrorNotification(error?.response?.data?.error || "Failed to fetch portfolio.");
         console.error("Portfolio fetch error:", error);
       } finally {
@@ -47,7 +47,7 @@ const Portfolio = () => {
       await Axios.delete(`/portfolio/listings/${portfolioId}`);
       setPortfolios(prev => prev.filter(p => p._id !== portfolioId));
       SuccessNotification("Portfolio deleted successfully.");
-    } catch (error) {
+    } catch (error:any) {
       ErrorNotification(error?.response?.data?.error || "Failed to delete portfolio.");
       console.error("Delete error:", error);
     } finally {
@@ -109,3 +109,4 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+

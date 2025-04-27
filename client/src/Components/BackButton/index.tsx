@@ -19,3 +19,4 @@ const BackButton = ({ to, label = "Back", className = "" }: BackButtonProps) => 
 };
 
 export default BackButton;
+

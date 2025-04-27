@@ -114,3 +114,4 @@ const UpcomingAuctions = () => {
 }
 
 export default UpcomingAuctions
+

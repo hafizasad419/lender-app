@@ -49,3 +49,4 @@ const portfolioSlice = createSlice({
 
 export const { portfoliosFetched, clearPortfolios } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
+

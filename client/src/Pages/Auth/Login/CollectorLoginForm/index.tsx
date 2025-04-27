@@ -87,3 +87,4 @@ const CollectorLoginForm = () => {
 };
 
 export default CollectorLoginForm;
+

@@ -28,7 +28,7 @@ export const collectorLogin = async (
             SuccessNotification('Logged in successfully!');
             return response.data;
         }
-    } catch (error) {
+    } catch (error:any) {
         ErrorNotification(error?.response?.data?.error || 'Failed to Login.');
         throw error.response ? error : new Error("Something went wrong while Logging in.");
 
@@ -36,4 +36,5 @@ export const collectorLogin = async (
 
 
 };
+
 

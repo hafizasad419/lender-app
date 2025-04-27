@@ -33,3 +33,4 @@ const Profile: React.FC<ProfileProps> = ({ name, email, organization, role }) =>
 };
 
 export default Profile;
+

@@ -117,3 +117,4 @@ const CollectorForm = ({ setUserDetails }: any) => {
 };
 
 export default CollectorForm;
+

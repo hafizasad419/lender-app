@@ -48,7 +48,7 @@ const Marketplace = () => {
         listings: data.listings.data,
         pagination: data.listings.pagination,
       }));
-    } catch (error) {
+    } catch (error:any) {
       if (error.response?.data?.error) {
         ErrorNotification(error.response.data.error);
       } else {
@@ -129,3 +129,4 @@ const Marketplace = () => {
 };
 
 export default Marketplace;
+

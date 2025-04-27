@@ -65,7 +65,7 @@ const PortfolioDetails = () => {
                 const { data } = await Axios.get(`/portfolio/bid/${portfolioId}`);
                 console.log(data)
                 setBids(data.bids);
-            } catch (error) {
+            } catch (error:any) {
                 ErrorNotification("Failed to load bid history");
             }
         };
@@ -192,7 +192,7 @@ const PortfolioDetails = () => {
                                 setAmountBidValue(0);
                                 const { data } = await Axios.get(`/portfolio/bid/${portfolioId}`);
                                 setBids(data.bids);
-                            } catch (error) {
+                            } catch (error:any) {
                                 ErrorNotification("Failed to place bid");
                             } finally {
                                 setSubmitting(false);
@@ -357,3 +357,4 @@ const PortfolioDetails = () => {
 };
 
 export default PortfolioDetails;
+

@@ -94,3 +94,4 @@ const PerformanceChart = ({ timeframe }: PerformanceChartProps) => {
 }
 
 export default PerformanceChart
+

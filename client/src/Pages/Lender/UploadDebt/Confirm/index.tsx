@@ -51,3 +51,4 @@ const Confirm = ({ onReupload }: any) => {
 }
 
 export default Confirm
+

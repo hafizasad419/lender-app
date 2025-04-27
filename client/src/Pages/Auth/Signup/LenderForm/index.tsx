@@ -48,7 +48,7 @@ const LenderForm = ({ setUserDetails }: any) => {
             await lenderSignup(payload);
             navigate('/login')
             setUserDetails(payload);
-        } catch (error) {
+        } catch (error:any) {
             // const msg = err?.response?.data?.message || 'Network error';
             console.log("error on signup: ", error?.message)
         } finally {
@@ -99,4 +99,5 @@ const LenderForm = ({ setUserDetails }: any) => {
 };
 
 export default LenderForm;
+
 

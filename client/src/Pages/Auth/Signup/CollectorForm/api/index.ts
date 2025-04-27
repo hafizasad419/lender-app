@@ -34,7 +34,7 @@ export const collectorSignup = async (
             SuccessNotification('Account created successfully!');
             return response.data;
         }
-    } catch (error) {
+    } catch (error:any) {
         ErrorNotification(error?.response?.data?.error || 'Failed to create account.');
         throw error.response ? error : new Error("Something went wrong");
 
@@ -42,4 +42,5 @@ export const collectorSignup = async (
 
 
 };
+
 

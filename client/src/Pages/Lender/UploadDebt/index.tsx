@@ -40,7 +40,7 @@ const UploadDebt = () => {
         if (storedName) {
           setPortfolioName(JSON.parse(storedName));
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error("Error parsing stored CSV data:", error);
         localStorage.removeItem("csvData");
         localStorage.removeItem("portfolioName");
@@ -98,7 +98,7 @@ const UploadDebt = () => {
       }
 
       navigate("/portfolio");
-    } catch (error) {
+    } catch (error:any) {
       ErrorNotification(error?.response?.data?.error + " Please Refresh and Try Again." || "Failed to upload debt portfolio. Please Refresh and Try Again.");
       console.error("Debt upload error:", error);
       hasUploadedRef.current = false;
@@ -145,3 +145,4 @@ const UploadDebt = () => {
 };
 
 export default UploadDebt;
+

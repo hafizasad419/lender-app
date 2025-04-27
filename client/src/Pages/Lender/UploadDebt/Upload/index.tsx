@@ -188,7 +188,7 @@ const Upload = ({ onCsvUploaded }: UploadProps) => {
                             data: rowData
                         });
                     },
-                    error: (error) => {
+                    error: (error:any) => {
                         setIsLoading(false);
                         setError("Error parsing CSV file: " + error?.message);
                     }

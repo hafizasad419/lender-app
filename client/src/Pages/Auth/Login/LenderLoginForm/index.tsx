@@ -45,7 +45,7 @@ const LenderLoginForm = () => {
                 }
             }
         }
-        catch (error) {
+        catch (error:any) {
             if (error.response && error.response.data && error.response.data.error) {
                 ErrorNotification(error.response.data.error);
             } else {
@@ -91,3 +91,4 @@ const LenderLoginForm = () => {
 };
 
 export default LenderLoginForm;
+
