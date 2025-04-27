@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+@layer base {
+  html {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    background-color: #f5f5f5;
+
+  }
+}
+
+.btn-outline {
+  @apply shadow-xl p-4 text-zinc bg-transparent border border-zinc  font-bold rounded-lg transition duration-300 ease-in-out select-none focus:outline-none disabled:bg-zinc/15 disabled:text-white disabled:cursor-not-allowed capitalize active:shadow-md active:scale-90;;
+}
+
+.btn-primary {
+  @apply shadow-xl p-4 text-[#ffffff] bg-orange font-bold rounded-lg transition duration-300 ease-in-out select-none focus:outline-none disabled:bg-orange/50 disabled:text-white disabled:cursor-not-allowed capitalize active:shadow-md active:scale-90;;
+}
+
+
+.btn-primary-zinc {
+  @apply shadow-xl p-4 bg-zinc  text-[#ffffff] font-bold rounded-lg transition duration-300 ease-in-out select-none focus:outline-none disabled:bg-zinc/50 disabled:text-white disabled:cursor-not-allowed capitalize hover:bg-zinc/90 active:shadow-md active:scale-90;
+
+  
+}
+
+
+
+/* Error and Success Messages */
+.error-message{
+  @apply bg-red-100 text-red-500 p-4 rounded-xl my-4
+}
+.success-message{
+  @apply bg-green-100 text-green-600 p-4 rounded-xl my-4
+}
+
+
+/* Scrollbar */
+
+body {
+  --sb-track-color: #ffffff;
+  --sb-thumb-color: #f55800;
+  --sb-size: 8px;
+  /* Scrollbar width */
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  /* Track color (Gray-300) */
+  border-radius: 10px;
+  /* Rounded corners */
+  padding: 2px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  /* Thumb color (Slate-700) */
+  border-radius: 10px;
+  /* Rounded corners */
+  border: 2px solid transparent;
+  /* Padding for thumb visibility */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #d35004;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    scrollbar-width: thin;
+  }
+}
+
+
+
+
+/* Animations */
+
+@keyframes subtleBounce {
+
+  0%,
+  100% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-subtle-bounce {
+  animation: subtleBounce 1s ease-in-out 5;
+}
+
+
+
+/* Poppins */
+.poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
