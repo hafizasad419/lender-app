@@ -1,6 +1,0 @@
-src/
-node_modules/
-*.ts
-*.tsx
-nodemon.json
-tsconfig.json
