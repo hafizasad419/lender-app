@@ -1,5 +1,5 @@
 // export const BASE_URL = "http://localhost:5000/api/v1"
-export const BASE_URL = "https://lender-app-backend.vercel.app"
+export const BASE_URL = "https://lender-app-backend.vercel.app/api/v1"
 
 
 // export const LENDER_APP_ACCESS = "lender-app-access"
