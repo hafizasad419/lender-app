@@ -7,14 +7,21 @@ interface BackButtonProps {
   className?: string;
 }
 
-const BackButton = ({ to, label = "Back", className = "" }: BackButtonProps) => {
+const BackButton = ({
+  to,
+  label = "Back",
+  className = "" }: BackButtonProps) => {
   return (
-    <button className={`btn-outline !text-sm !mb-4 flex items-center gap-2 ${className}`}>
-      <NavLink to={to}>
-        <ArrowLeft className="w-4 h-4" />
-        {label}
-      </NavLink>
-    </button>
+    <NavLink
+      to={to}
+      className={`btn-outline !text-sm !mb-4 inline-flex items-center gap-2 ${className}`}
+    >
+      <ArrowLeft className="w-4 h-4" />
+      {label}
+    </NavLink>
+
+
+
   );
 };
 
