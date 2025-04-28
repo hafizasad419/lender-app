@@ -81,40 +81,69 @@ const BidSection = ({
                     }
                 }}
             >
-                {({ isSubmitting, values }) => (
-                    <Form className="flex flex-col gap-3 text-sm">
-                        {bidType === "percentage" ? (
-                            <>
-                                <TextField field="bidPercentage" type="number" label_text="" placeholder="Enter bid % (20 - 60%)" />
-                                {(values.bidPercentage >= 20 && values.bidPercentage <= 60) && (
-                                    <p className="text-zinc-600">
-                                        @{values.bidPercentage}% earns you an estimated share.
-                                    </p>
-                                )}
-                            </>
-                        ) : (
-                            <>
-                                <TextField field="bidAmount" type="number" label_text="" placeholder="Enter purchase amount" />
-                                {values.bidAmount !== "" && Number(values.bidAmount) > 0 && (
-                                    <p className="text-zinc-600">
-                                        You are offering ${Number(values.bidAmount)} to buy the portfolio.
-                                    </p>
-                                )}
-                            </>
-                        )}
-                        <button
-                            type="submit"
-                            className="btn-primary !px-6 mt-2"
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? (
-                                <BiLoaderAlt className="animate-spin text-xl mx-auto" />
+                {({ isSubmitting, values }) => {
+                    const collectorEstimatedEarning =
+                        bidType === "percentage" &&
+                            values.bidPercentage >= 20 &&
+                            values.bidPercentage <= 60
+                            ? ((values.bidPercentage / 100) * portfolio?.portfolioFaceValue).toFixed(2)
+                            : null;
+
+                    return (
+                        <Form className="flex flex-col gap-3 text-sm">
+                            {bidType === "percentage" ? (
+                                <>
+                                    <TextField
+                                        field="bidPercentage"
+                                        type="number"
+                                        label_text=""
+                                        placeholder="Enter bid % (20 - 60%)"
+                                    />
+                                    {collectorEstimatedEarning && (
+                                        <p className="text-green-700 text-sm">
+                                            @{values.bidPercentage}% you'll earn {" "}
+                                            <span className="font-semibold">
+                                                ${collectorEstimatedEarning}
+                                            </span>{" "}
+                                            if debt is collected successfully.
+                                        </p>
+                                    )}
+                                </>
                             ) : (
-                                "Place Bid"
+                                <>
+                                    <TextField
+                                        field="bidAmount"
+                                        type="number"
+                                        label_text=""
+                                        placeholder="Enter purchase amount"
+                                    />
+                                    {values.bidAmount !== "" &&
+                                        Number(values.bidAmount) > 0 && (
+                                            <p className="text-green-700 text-sm">
+                                                You are offering{" "}
+                                                <span className="font-semibold">
+                                                    ${Number(values.bidAmount).toLocaleString()}
+                                                </span>{" "}
+                                                to purchase the full portfolio.
+                                            </p>
+                                        )}
+                                </>
                             )}
-                        </button>
-                    </Form>
-                )}
+
+                            <button
+                                type="submit"
+                                className="btn-primary !px-6 mt-2"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <BiLoaderAlt className="animate-spin text-xl mx-auto" />
+                                ) : (
+                                    "Place Bid"
+                                )}
+                            </button>
+                        </Form>
+                    );
+                }}
             </Formik>
         </>
     );
