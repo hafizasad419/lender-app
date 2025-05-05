@@ -35,7 +35,7 @@ const BidList = ({ bids, totalPrincipalAmount }: BidListProps) => {
     if (hasAcceptedBid)
         return (
             <AcceptedBidCard
-                acceptedBid={...acceptedBid}
+                acceptedBid={acceptedBid}
                 totalPrincipalAmount={totalPrincipalAmount} />
 )
 
