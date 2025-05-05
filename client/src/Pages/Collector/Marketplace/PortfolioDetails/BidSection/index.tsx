@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import TextField from "@src/Components/FormikFields/TextField";
 import { Axios } from "@src/api";
-import { SuccessNotification, ErrorNotification } from "@src/utils";
+import { SuccessNotification, ErrorNotification, calculateCollectorPayout } from "@src/utils";
 import { BiLoaderAlt } from "react-icons/bi";
 
 const BidSection = ({
@@ -43,8 +43,9 @@ const BidSection = ({
                 <p className="text-sm text-zinc-600">
                     Highest Bid: <span className="font-semibold text-zinc">
                         {highestBid.type === "percentage"
-                            ? `${highestBid.amount}% (Contingency)`
-                            : `$${highestBid.amount.toLocaleString()} (Purchase)`}
+                            ? `${highestBid.amount}% (Contingency) = $${calculateCollectorPayout(portfolio?.portfolioFaceValue, highestBid.amount)}`
+                            : `$${highestBid.amount.toLocaleString()} (Purchase)`
+                            }
                     </span>
                 </p>
             )}

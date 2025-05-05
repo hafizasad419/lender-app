@@ -3,16 +3,19 @@ import { BiLoaderAlt } from "react-icons/bi";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import TextField from "@src/Components/FormikFields/TextField";
+import Dropdown from "@src/Components/FormikFields/Dropdown";
+import { DEBT_TYPES } from "@src/constants";
 
 interface PreviewProps {
   csvData: CSVData;
   isUploading: boolean;
-  onConfirm: (portfolioNameInput: string) => void;
+  onConfirm: (portfolioNameInput: string, debtTypeInput: string) => void;
   onReupload: () => void;
   portfolioName?: string;
+  debtType?: string;
 }
 
-const Preview = ({ csvData, onConfirm, onReupload, isUploading, portfolioName }: PreviewProps) => {
+const Preview = ({ csvData, onConfirm, onReupload, isUploading, portfolioName, debtType }: PreviewProps) => {
   const principalIndex = csvData.headers.findIndex((h) => h.toLowerCase().includes("principal"));
 
   const totalPrincipal = csvData.data.reduce((sum, row) => {
@@ -22,10 +25,12 @@ const Preview = ({ csvData, onConfirm, onReupload, isUploading, portfolioName }:
 
   const validationSchema = yup.object({
     portfolioNameInput: yup.string().required("Portfolio name is required"),
+    debtTypeInput: yup.string().required("Debt Type is required")
   });
 
   const initialValues = {
     portfolioNameInput: portfolioName || "",
+    debtTypeInput: debtType || "",
   };
 
   return (
@@ -38,17 +43,29 @@ const Preview = ({ csvData, onConfirm, onReupload, isUploading, portfolioName }:
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={({ portfolioNameInput }) => {
-          onConfirm(portfolioNameInput);
+        onSubmit={({ portfolioNameInput, debtTypeInput }) => {
+          onConfirm(portfolioNameInput, debtTypeInput);
         }}
       >
         {({ isSubmitting }) => (
           <Form className="mb-6 max-w-md mx-auto space-y-4">
-            <TextField
-              field="portfolioNameInput"
-              label_text="Portfolio Name"
-              placeholder="Enter a name for this portfolio"
-            />
+
+            <section
+              className="grid grid-cols-1 sm:grid-cols-2 gap-x-4"
+            >
+              <TextField
+                field="portfolioNameInput"
+                label_text="Portfolio Name"
+                placeholder="Enter a name for this portfolio"
+              />
+              <Dropdown
+                field="debtTypeInput"
+                label_text="Debt Type"
+                options={DEBT_TYPES}
+                placeholder="Select debt type"
+              />
+            </section>
+
 
             <div className="flex justify-center">
               <button

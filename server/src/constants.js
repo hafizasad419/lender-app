@@ -14,3 +14,4 @@ export const ROLES = {
     COLLECTOR: "collector"
   } 
   
+  export const BID_STATUSES = ["pending", "accepted", "rejected"]

@@ -5,15 +5,15 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 // lazy import 
 const Dashboard = lazy(() => import('@src/Pages/Lender/Dashboard'))
 const UploadDebt = lazy(() => import('@src/Pages/Lender/UploadDebt'))
-const PortfolioDetails = lazy(() => import('@src/Pages/Lender/Portfolio/PortfolioDetails'))
+const PortfolioDetails = lazy(() => import('@src/Pages/Lender/Portfolio/PendingPortfolios/PortfolioDetails'))
 const Portfolio = lazy(() => import('@src/Pages/Lender/Portfolio'))
 const LenderProfile = lazy(() => import('@src/Pages/Lender/LenderProfile'))
 
 function LenderRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<UploadDebt />} />
+            {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/upload" element={<UploadDebt />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/profile" element={<LenderProfile />} />

@@ -45,12 +45,6 @@ export const removeToken = (role?: keyof typeof STORAGE_KEYS) => {
 };
 
 
-export const sendMailTo = ({ emailAddress = "", subject = "Hello", body = "I would like to connect with you." }) => {
-    const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-};
-
-
 export const formatCsvDataForBackend = (data: string[][], headers: string[]) => {
     return data?.map((row) => {
         return {
@@ -69,6 +63,63 @@ export const formatCsvDataForBackend = (data: string[][], headers: string[]) => 
         };
     });
 };
+
+
+export const formatDebtType = (raw: string) =>
+    raw
+      .split("_")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  
+
+
+/**
+ * Obfuscates a name by keeping the first letter and last 2 letters visible
+ * and replacing the rest with asterisks
+ * @param name The name to obfuscate
+ * @returns The obfuscated name
+ */
+export const obfuscateName = (name: string): string => {
+    if (!name) return ""
+  
+    // Split the name into parts (first name, last name, etc.)
+    const nameParts = name.split(" ")
+  
+    // Process each part of the name
+    const obfuscatedParts = nameParts.map((part) => {
+      if (part.length <= 4) {
+        // For very short names, just show first letter and asterisks
+        return `${part.charAt(0)}${"*".repeat(part.length - 1)}`
+      } else {
+        // For longer names, show first letter, asterisks, and last 2 letters
+        const firstChar = part.charAt(0)
+        const lastOneChar = part.slice(-1)
+        const middleLength = part.length - 2
+        const asterisks = "*".repeat(middleLength)
+  
+        return `${firstChar}${asterisks}${lastOneChar}`
+      }
+    })
+  
+    // Join the parts back together
+    return obfuscatedParts.join(" ")
+  }
+
+
+
+
+
+/**
+ * Calculates collector payout based on bid type.
+ * @param totalAmount - Total debt portfolio amount.
+ * @param percentage - Percentage offered by collector (e.g., 25 means 25%).
+ * @returns Amount the collector will receive.
+ */
+export function calculateCollectorPayout(totalAmount: number, percentage: number): number {
+    if (percentage < 0 || percentage > 100 || totalAmount < 0) return 0;
+    return +(totalAmount * (percentage / 100)).toFixed(2); // Rounded to 2 decimal places
+  }
+  
 
 
 

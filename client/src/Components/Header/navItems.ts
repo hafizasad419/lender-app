@@ -2,7 +2,7 @@ import { Upload } from "lucide-react";
 
 
 export const lenderNavItems = [
-    { name: "Dashboard", path: "/", type: "link" },
+    // { name: "Dashboard", path: "/", type: "link" },
     { name: "Portfolio", path: "/portfolio", type: "link" },
     { name: "Profile", path: "/profile", type: "link" },
     { name: "Upload Portfolio", path: "/upload", type: "primary", Icon: Upload }

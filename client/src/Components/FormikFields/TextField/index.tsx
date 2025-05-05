@@ -48,10 +48,10 @@ const TextField: React.FC<TextFieldProps> = ({
                 ${className}`}
             />
             {meta.touched && meta.error && (
-              <p className="error-message mt-1 text-xs">{meta.error}</p>
+              <p className="error-message">{meta.error}</p>
             )}
             {meta.touched && !meta.error && (
-              <p className="success-message mt-1 text-xs">Looks good!</p>
+              <p className="success-message">Looks good!</p>
             )}
           </div>
         )}

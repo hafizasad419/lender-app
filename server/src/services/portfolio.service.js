@@ -8,11 +8,11 @@ import { Bid } from "../models/bid.model.js";
 
 
 export const uploadDebtService = async (
-    { lenderId, debts, portfolioName }
+    { lenderId, debts, portfolioName, debtType }
 ) => {
     try {
-        if (!lenderId || !debts?.length) {
-            throw new AppError(400, "Lender ID and debts are required.");
+        if (!lenderId || !debts?.length || !debtType) {
+            throw new AppError(400, "Lender ID, debtType and debts are required.");
         }
 
         const lender = await Lender.findById(lenderId);
@@ -28,7 +28,7 @@ export const uploadDebtService = async (
         const portfolio = new DebtPortfolio({
             lenderId,
             name: portfolioName || `Portfolio-${Date.now()}`, // Optional: dynamic name
-            uploadedVia: "manual",
+            debtType,
             totalDebts,
             totalPrincipalAmount
         });
@@ -93,7 +93,7 @@ export const getPortfolioDetailsService = async (portfolioId) => {
     const bids = await Bid.find({ debtPortfolioId: portfolioId })
         .populate({
             path: 'collectorId',
-            select: 'name email'
+            select: 'name email organization'
         });
 
     return {
@@ -230,7 +230,9 @@ export const getPortfolioListingsService = async (params = {}) => {
                 averageDebtSize: 1,
                 totalDebtors: 1,
                 lenderName: 1,
-                lenderOrganization: 1
+                lenderOrganization: 1,
+                status: 1,
+                debtType: 1  
             }
         },
         { $skip: skip },

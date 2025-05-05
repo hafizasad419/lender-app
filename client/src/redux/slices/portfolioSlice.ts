@@ -10,6 +10,7 @@ interface PortfolioListing {
     lenderName: string;
     lenderOrganization: string;
     totalDebtors: number;
+    debtType: string;
 }
 
 interface Pagination {

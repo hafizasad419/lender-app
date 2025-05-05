@@ -16,12 +16,13 @@ export interface CSVData {
 }
 
 const UploadDebt = () => {
-    const lender = useSelector((state: any) => state.user);
-    const navigate = useNavigate();
-    const [isUploading, setIsUploading] = useState(false);
+  const lender = useSelector((state: any) => state.user);
+  const navigate = useNavigate();
+  const [isUploading, setIsUploading] = useState(false);
   const [currentStep, setCurrentStep] = useState<Step>("upload");
   const [csvData, setCsvData] = useState<CSVData | null>(null);
   const [portfolioName, setPortfolioName] = useState<string>("");
+  const [debtType, setDebtType] = useState<string>("");
 
   // To avoid repeated uploads due to React.StrictMode or rerenders
   const hasUploadedRef = useRef(false);
@@ -30,6 +31,7 @@ const UploadDebt = () => {
   useEffect(() => {
     const storedData = localStorage.getItem("csvData");
     const storedName = localStorage.getItem("portfolioName");
+    const storedDebtType = localStorage.getItem("debtType");
 
     if (storedData) {
       try {
@@ -40,10 +42,11 @@ const UploadDebt = () => {
         if (storedName) {
           setPortfolioName(JSON.parse(storedName));
         }
-      } catch (error:any) {
+      } catch (error: any) {
         console.error("Error parsing stored CSV data:", error);
         localStorage.removeItem("csvData");
         localStorage.removeItem("portfolioName");
+        localStorage.removeItem("debtType");
       }
     }
   }, []);
@@ -60,7 +63,7 @@ const UploadDebt = () => {
       !hasUploadedRef.current
     ) {
       hasUploadedRef.current = true;
-      handleConfirmClick(portfolioName);
+      handleConfirmClick(portfolioName, debtType);
     }
   }, [currentStep, csvData, portfolioName, lender]);
 
@@ -70,9 +73,15 @@ const UploadDebt = () => {
     setCurrentStep("preview");
   };
 
-  const handleConfirmClick = async (portfolioNameInput: string) => {
-    localStorage.setItem("portfolioName", JSON.stringify(portfolioNameInput));
+  const handleConfirmClick = async (portfolioNameInput: string, selectedDebtType: string) => {
+
+    localStorage.setItem("portfolioName",
+      JSON.stringify(portfolioNameInput));
+    localStorage.setItem("debtType",
+      JSON.stringify(selectedDebtType));
+
     setPortfolioName(portfolioNameInput); // update for effect too
+    setDebtType(selectedDebtType);
 
     if (!csvData) return;
 
@@ -89,6 +98,8 @@ const UploadDebt = () => {
         lenderId: lender._id,
         debts: formattedData,
         portfolioName: portfolioNameInput,
+        debtType: selectedDebtType
+
       });
 
       if (response.status === 200) {
@@ -98,7 +109,7 @@ const UploadDebt = () => {
       }
 
       navigate("/portfolio");
-    } catch (error:any) {
+    } catch (error: any) {
       ErrorNotification(error?.response?.data?.error + " Please Refresh and Try Again." || "Failed to upload debt portfolio. Please Refresh and Try Again.");
       console.error("Debt upload error:", error);
       hasUploadedRef.current = false;
@@ -133,9 +144,10 @@ const UploadDebt = () => {
         <Preview
           isUploading={isUploading}
           csvData={csvData}
+          portfolioName={portfolioName}
           onConfirm={handleConfirmClick}
           onReupload={handleReupload}
-          portfolioName={portfolioName}
+          debtType={debtType}
         />
       )}
 

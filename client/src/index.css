@@ -33,18 +33,16 @@
 
 .btn-primary-zinc {
   @apply shadow-xl p-4 bg-zinc  text-[#ffffff] font-bold rounded-lg transition duration-300 ease-in-out select-none focus:outline-none disabled:bg-zinc/50 disabled:text-white disabled:cursor-not-allowed capitalize hover:bg-zinc/90 active:shadow-md active:scale-90;
-
-  
 }
 
 
 
 /* Error and Success Messages */
 .error-message{
-  @apply bg-red-100 text-red-500 p-4 rounded-xl my-4
+  @apply bg-red-100 text-red-500 p-4 rounded-xl my-4 text-xs
 }
 .success-message{
-  @apply bg-green-100 text-green-600 p-4 rounded-xl my-4
+  @apply bg-green-100 text-green-600 p-4 rounded-xl my-4 text-xs
 }
 
 
@@ -94,22 +92,20 @@ body::-webkit-scrollbar-thumb:hover {
 
 /* Animations */
 
-@keyframes subtleBounce {
-
-  0%,
-  100% {
-    transform: translateY(-10%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+@keyframes drop {
+  0% {
+    transform: translateY(-40%);
+    opacity: 0;
   }
 
-  50% {
-    transform: none;
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-.animate-subtle-bounce {
-  animation: subtleBounce 1s ease-in-out 5;
+.animate-drop {
+  animation: drop 0.5s ease-out forwards;
 }
 
 

@@ -8,13 +8,13 @@ import {
 
 export const uploadDebtController = async (req, res) => {
     try {
-        const { lenderId, debts, portfolioName } = req.body;
+        const { lenderId, debts, portfolioName, debtType } = req.body;
 
-        if (!lenderId || !debts || !Array.isArray(debts) || debts.length === 0) {
-            throw new AppError(400, "Invalid request: lenderId and debts array are required.");
+        if (!lenderId || !debts || !debtType || !Array.isArray(debts) || debts.length === 0) {
+            throw new AppError(400, "Invalid request: lenderId, debtType and debts array are required.");
         }
 
-        const result = await uploadDebtService({ lenderId, debts, portfolioName });
+        const result = await uploadDebtService({ lenderId, debts, portfolioName, debtType });
 
         res.status(200).json({
             success: true,

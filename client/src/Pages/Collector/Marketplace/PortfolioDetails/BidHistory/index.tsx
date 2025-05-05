@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { BadgeDollarSign } from "lucide-react";
+import { BadgeDollarSign, DollarSign, Percent, User2 } from "lucide-react";
 import { Axios } from "@src/api";
-import { ErrorNotification } from "@src/utils";
+import { calculateCollectorPayout, ErrorNotification, obfuscateName } from "@src/utils";
 
-
-const BidHistory = ({ portfolioId, bids, setBids }: any) => {
+const BidHistory = ({ portfolioId, bids, setBids, highestBid, portfolioFaceValue }: any) => {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -24,48 +23,87 @@ const BidHistory = ({ portfolioId, bids, setBids }: any) => {
         }
     }, [portfolioId]);
 
-    if (loading) return <div className="text-sm text-zinc-500">Loading bid history...</div>;
-    if (!bids.length) return <div className="text-sm text-zinc-400">No bids yet.</div>;
+    if (loading)
+        return (
+            <section className="bg-white border border-gray-200 rounded-2xl p-6 shadow-md">
+                <p className="text-sm text-zinc-500">Loading bid history...</p>
+            </section>
+        );
 
-    const highestBid = bids.reduce(
-        (prev: any, current: any) => (current.amount > prev.amount ? current : prev),
-        { amount: 0, type: "percentage", collectorId: {} }
-    );
+    if (!bids.length)
+        return (
+            <section className="bg-white border border-gray-200 rounded-2xl p-6 shadow-md">
+                <p className="text-sm text-zinc-400">No bids yet.</p>
+            </section>
+        );
+
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow space-y-5">
-            <h2 className="text-lg font-semibold text-zinc flex items-center">
-                <BadgeDollarSign className="w-5 h-5 mr-2 text-green-600" />
-                Bid History
-            </h2>
+        <section className="bg-white border border-gray-200 rounded-3xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+            <div className="flex items-center gap-2 mb-5">
+                <BadgeDollarSign className="w-6 h-6 text-green-600" />
+                <h2 className="text-2xl font-semibold text-zinc-800">Bid History</h2>
+            </div>
 
-            <p className="text-sm text-zinc-600">
-                Highest Bid:{" "}
-                <span className="font-semibold text-zinc">
+            <div className="mb-6">
+                <p className="text-sm text-gray-500">Highest Bid</p>
+                <p className="text-base font-medium text-zinc-800">
                     {highestBid.type === "percentage"
-                        ? `${highestBid.amount}% (Contingency)`
+                        ? `${highestBid.amount}% (Contingency) = $${calculateCollectorPayout(Number(portfolioFaceValue), highestBid.amount)}`
                         : `$${highestBid.amount.toLocaleString()} (Purchase)`}
-                </span>
-            </p>
+                </p>
+            </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="space-y-5">
                 {bids.map((bid: any, index: number) => (
                     <div
                         key={index}
-                        className="flex justify-between items-center border p-3 rounded-lg text-sm"
+                        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border border-gray-100 rounded-xl p-4 shadow-xl transition-shadow duration-200"
                     >
-                        <span className="text-zinc-600">
-                            {bid.type === "percentage"
-                                ? `${bid.amount}%`
-                                : `$${bid.amount.toLocaleString()}`}
-                        </span>
-                        <span className="text-zinc-400">
-                            {bid.type === "percentage" ? "Contingency" : "Purchase"}
-                        </span>
+                        {/* Amount */}
+                        <div className="flex items-start gap-3">
+                            <div className="bg-zinc-100 p-2 rounded-lg">
+                                <DollarSign className="w-5 h-5 text-green-600" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500">Amount</p>
+                                <p className="text-sm font-medium text-zinc-800">
+                                    {bid.type === "percentage"
+                                        ? `${bid.amount}%`
+                                        : `$${bid.amount.toLocaleString()}`}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Type */}
+                        <div className="flex items-start gap-3">
+                            <div className="bg-zinc-100 p-2 rounded-lg">
+                                <Percent className="w-5 h-5 text-zinc-700" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500">Bid Type</p>
+                                <p className="text-sm font-medium text-zinc-800">
+                                    {bid.type === "percentage" ? "Contingency" : "Purchase"}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Collector */}
+                        <div className="flex items-start gap-3">
+                            <div className="bg-zinc-100 p-2 rounded-lg">
+                                <User2 className="w-5 h-5 text-zinc-700" />
+                            </div>
+                            <div>
+                                <p className="text-xs text-gray-500">Collector</p>
+                                <p className="text-sm font-medium text-zinc-800">
+                                    {obfuscateName(bid?.collectorId?.name) || "N/A"}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
-        </div>
+        </section>
     );
 };
 
